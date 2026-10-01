@@ -45,7 +45,7 @@ jobs:
         # Redirect 404 tinyusb repo to upstream hathach/tinyusb
         git config --global url."https://github.com/hathach/tinyusb".insteadOf "https://github.com/canokeys/tinyusb"
         git submodule update --init canokey-core utils/uf2
-        git -C canokey-core submodule update --init canokey-crypto littlefs tinycbor
+        git -C canokey-core submodule update --init --recursive canokey-crypto littlefs tinycbor
         git -C canokey-core submodule update --init tinyusb || true
         cd canokey-core/tinyusb
         git remote set-url origin https://github.com/hathach/tinyusb.git
