@@ -42,7 +42,16 @@ jobs:
         
     - name: build
       run: | 
-        git submodule update --init --recursive
+        # Redirect 404 tinyusb repo to upstream hathach/tinyusb
+        git config --global url."https://github.com/hathach/tinyusb".insteadOf "https://github.com/canokeys/tinyusb"
+        git submodule update --init canokey-core utils/uf2
+        git -C canokey-core submodule update --init canokey-crypto littlefs tinycbor
+        git -C canokey-core submodule update --init tinyusb || true
+        cd canokey-core/tinyusb
+        git remote set-url origin https://github.com/hathach/tinyusb.git
+        git fetch --depth 1 origin 59009fbcab780bdcccadde04ff1c0a63224ea482 || git fetch --depth 1 origin tag 0.12.0
+        git checkout 59009fbcab780bdcccadde04ff1c0a63224ea482 || git checkout 0.12.0
+        cd ../..
         mkdir build
         cd build
         cmake -DCROSS_COMPILE=/opt/arm-none-eabi/bin/arm-none-eabi- \
