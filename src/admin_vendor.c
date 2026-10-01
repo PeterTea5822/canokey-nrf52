@@ -95,6 +95,10 @@ int admin_vendor_specific(const CAPDU *capdu, RAPDU *rapdu) {
   return 0;
 }
 
+int admin_vendor_nfc_enable(const CAPDU *capdu, RAPDU *rapdu, bool pin_validated) {
+  return 0;
+}
+
 
 void EnableRDP() {
   if (NRF_UICR->APPROTECT != 0x0)
